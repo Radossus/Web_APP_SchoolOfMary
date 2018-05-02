@@ -1,0 +1,30 @@
+{block content}
+
+    <h1 n:block=title>Editace Novinky</h1>
+<div style="float:right"><a href="javascript:history.back();">zpět</a></div> 
+
+ {control editNewForm}
+
+  <script type="text/javascript">
+  tinymce.init({
+    selector: 'textarea',
+    theme: 'modern',
+    language: 'cs_CZ',
+    width: 600,
+    height: 300,
+    plugins: [
+      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+      'save table contextmenu directionality emoticons template paste textcolor'
+    ],
+    content_css: 'css/content.css',
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons | code'
+  });
+  </script>
+    
+    
+
+
+
+
+{* or use {include '../components/form.latte', form => signInForm} *}

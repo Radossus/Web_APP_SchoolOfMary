@@ -1,0 +1,22 @@
+{block content}
+
+{if $user->loggedIn}
+    {if $user->isInRole('adminOV') || $user->isInRole('adminSuper')}
+    <h1>Správa termínů</h1>
+    <p class="button"><a n:href="Adminskola:AddTermin">Vypsat nový termín</a></p>    
+        {if $terminy}
+            {foreach $terminy as $termin}
+                <div class="boxZvyrazneni">
+                <div>{$termin->datum_zacatek|date:'%d.%m.%Y %H:%M'} -  {$termin->datum_konec|date:'%d.%m.%Y'}
+                    <a style="float:right" n:href="deleteTermin $termin->termin_id" onclick="return confirm('Opravdu chcete smazat termín?')">&nbsp Smazat &nbsp </a>                 
+                    <a style="float:right" n:href="editTermin $termin->termin_id">&nbsp Editovat &nbsp</a>
+                </div>
+                <span ><a n:href="Adminskola:prihlaseniuzivatele $termin->termin_id">Prohlédnout přihlášení uživatelé</a></span>
+                </div>
+            {/foreach}
+        {/if}
+    {/if}   
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

@@ -1,0 +1,15 @@
+﻿{block content}
+
+{if $user->loggedIn}
+    <h1>Vaše přihlášení proběhlo úspěšně!</h1>
+  
+    
+    
+    <!--
+    <p>Nyní se můžete <a n:href="User:out">odhlásit</a></p>
+    -->
+    
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

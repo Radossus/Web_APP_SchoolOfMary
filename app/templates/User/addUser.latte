@@ -1,0 +1,6 @@
+{block content}
+{if $user->isInRole(adminOV)}
+    <h1 n:block=title>Vložení nového uživatele</h1>
+    {control addUserForm}
+{/if}
+{* or use {include '../components/form.latte', form => signInForm} *}

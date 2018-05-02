@@ -1,0 +1,14 @@
+*.neon
+*.mpg
+*.zip
+log/*
+session/*
+temp/*
+tmp/*
+vendor/*
+www/adminer/*
+www/it/*
+www/photogallery/*
+www/temp/*
+www/files/*
+nbproject/*

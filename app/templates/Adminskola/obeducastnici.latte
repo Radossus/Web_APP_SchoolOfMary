@@ -1,0 +1,23 @@
+{block content}
+
+{if $user->loggedIn}
+    {if $user->isInRole('adminOV') ||  $user->isInRole('adminSuper')}
+        <h1>Přihlášeni účastníci na oběd </h1>
+        <p><a href="#" onclick="history.go(-1);return false;">Zpět</a></p>
+        {if $seznamUcastniku}
+            <table class="defaultTable">
+                <tr><th>Den</th><th>Datum</th><th>Přihlášen dne</th><th>Jméno</th></tr>
+            {foreach $seznamUcastniku as $ucastnici}
+                <td>{$ucastnici->obed->den}</td>
+                <td>{$ucastnici->obed->datum|date:'%d.%m.%Y'}</td>
+                <td>{$ucastnici->datum_prihlaseni|date:'%d.%m.%Y %H:%M'}</td>
+                <td>{$ucastnici->jmeno}</td>
+            </tr>
+            {/foreach}
+            </table>
+        {/if}
+    {/if}   
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

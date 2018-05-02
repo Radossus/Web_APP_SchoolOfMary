@@ -1,0 +1,41 @@
+
+{block content}
+
+    {if $stranka}
+        <h2>{$stranka->nazev|upper}</h2>
+        
+        {!$stranka->obsah}
+    {/if}    
+    
+    {if $novinkaAll}
+        {foreach $novinkaAll as $nAll} 
+            
+            <div class="novinkaNadpis">{!$nAll->nadpis|upper}</div>
+                <p>
+                    {!$nAll->notifikace}
+
+                    {if $nAll->obsah}
+                        <a n:href="Homepage:nAll $novinka->id"> Přečíst více</a>
+                        <div class="clear"></div> 
+                    {/if}
+                </p>
+            
+    {/foreach}
+    {/if}
+
+
+    {foreach $novinky as $novinka} 
+        <div class="novinkaNadpis">{!$novinka->nadpis|upper}</div>
+            <p>
+                {!$novinka->notifikace}
+                
+                {if $novinka->obsah}
+                    <a n:href="Homepage:novinka $novinka->id"> Přečíst více</a>
+                    <div class="clear"></div> 
+                {/if}
+            </p>
+    {/foreach}
+     
+{/block}
+
+

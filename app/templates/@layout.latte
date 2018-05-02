@@ -1,0 +1,198 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+
+	<title>{block title|striptags|upper} škola Marie z Nazaretu, Matky církve{/block}</title>
+        
+        <link href="{$basePath}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+        <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/lightbox.css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+        <link rel="stylesheet" type="text/css" href="{$basePath}/css/jquery-ui-timepicker-addon.css">
+        <link rel="stylesheet" type="text/css" href="{$basePath}/css/dateInput.css">
+        <link rel="stylesheet" type="text/css" href="{$basePath}/js/jquery-ui/jquery-ui.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+        <script src='{$basePath}/js/tinymce/tinymce.min.js'></script>
+        <script type='text/javascript' src="{$basePath}/js/netteForms.js"></script>
+        <script type='text/javascript' src="{$basePath}/js/jquery.js"></script>
+        <script type='text/javascript' src="{$basePath}/js/jquery-ui.js"></script>
+        <script type='text/javascript' src="{$basePath}/js/jquery-ui-timepicker-addon.js"></script>
+        <script type='text/javascript' src="{$basePath}/js/dateInput.js"></script>
+       
+       
+       
+	{block head}{/block}
+</head>
+
+<body>
+	
+     
+        <script> document.documentElement.className+=' js' </script>
+        <div class="container">
+            
+        </div>
+        
+        <header>
+        <div class="container">
+            <div id="topBar">
+                {if $user->loggedIn}
+                    {$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni} | <a n:href="User:out">Odhlášení</a>
+                {else}
+                    <a n:href="User:in">Přihlášení</a>
+                {/if}
+            </div>
+            <div id="banner">
+            <div class="col-xs-12 col-sm-10">
+                <h1>Škola křesťanského života a evangelizace</h1>
+                <h2>Marie z Nazaretu, Matky církve</h2>
+            </div>
+            </div>
+            <div class="col-xs-12 col-sm-2"></div>
+        </div>
+        </header>
+        
+        <div class="container">
+        {if $menuFilie}
+        <nav class="navbar navbar-default" role="navigation">
+          <!-- <div class="container-fluid"> -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                     <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <!--<a class="navbar-brand" href="#">Menu</a> -->
+                </div>
+                <div class="collapse navbar-collapse" id="defaultNavbar1">
+                    <ul class="nav navbar-nav">
+                        <li {ifCurrent Homepage:default}class="active"{/ifCurrent}><a href={link homepage:default}>Úvod</a></li>
+                        {foreach $menuFilie as $item}
+                            <li {ifCurrent Homepage:skola $item->url}class="active"{/ifCurrent} {ifCurrent Homepage:stranka $item->url}class="active"{/ifCurrent} {ifCurrent Fotogalerie:default $item->filie_id}class="active"{/ifCurrent}><a n:href="Homepage:skola $item->url">{$item->nazev}</a></li>
+                        {/foreach}
+                    </ul>
+                </div>
+        </nav>
+        {/if}
+        <div>  <!-- konec containeru -->
+    
+        <div id="telo">
+        <div id='menuWeb' class="col-xs-12 col-sm-2" >  
+            {if $user->loggedIn}
+            <div id="menuWebLoged">
+                <ul>
+                    <li><a n:href="Skola:termin">Termín školy</a></li>
+                    <li><a n:href="User:userinfo">Osobní údaje</a></li>
+
+                    {if $user->isInrole("adminOV") || $user->isInrole("adminSuper")}
+                        <li><a n:href="adminskola:users">Správa uživatelů</a></li>
+                        <li><a n:href="adminskola:terminy">Správa termínů</a></li>
+                        <li><a n:href="adminhome:novinky">Správa novinek</a></li>
+                    {/if}
+                    {if $user->isInrole("adminBR") || $user->isInrole("adminOASIS") || $user->isInrole("adminPH") || $user->isInrole("adminCB")}
+                        <li><a n:href="adminhome:novinky">Správa novinek</a></li>
+                    {/if}
+                    
+               </ul>
+            </div>
+          {/if}
+            
+          {if $menuItemsUvod}
+              <ul>
+                {foreach $menuItemsUvod as $menuI}
+                    {var $filie_id = $menuI->filie->filie_id}
+                    {if !$menuI->onlyLogged}
+                        <li><a n:href="Homepage:stranka $menuI->url">{$menuI->nazev}</a></li>
+                    {/if}
+
+                    {if $user->loggedIn}
+                     {if $menuI->onlyLogged}
+                        <li><a n:href="Homepage:stranka $menuI->url">{$menuI->nazev}</a></li>
+                     {/if}
+                     {/if}
+                {/foreach}
+                </ul>
+          {/if}
+ 
+          {if $menuItems}   
+            <ul>
+              {foreach $menuItems as $menuItem}
+                {var $page_url = $menuItem->filie->url}
+                {var $filie_id = $menuItem->filie->filie_id}
+                {if $user->loggedIn}
+                    {if $menuItem->onlyLogged}
+                        <li><a n:href="Homepage:stranka $menuItem->url">{$menuItem->nazev}</a></li>
+                    {/if}
+                {/if}
+                {if !$menuItem->onlyLogged}
+                    <li><a n:href="Homepage:skola $menuItem->filie->url, $menuItem->url">{$menuItem->nazev}</a></li>
+                {/if}
+              {/foreach}
+            {if $user->loggedIn}
+                <li><a n:href="Fotogalerie:default">Fotogalerie společná</a></li>
+            {/if}
+
+            </ul>
+            {/if}
+            {if $fotogalery AND !$user->loggedIn}
+               <ul><li><a n:href="Fotogalerie:default $filie_id">Fotogalerie</a></li></ul>
+            {/if}
+          </div>  <!-- konec menuWeb -->
+        
+        
+        <div class="col-xs-12 col-sm-10">
+          <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+          {include content}
+        </div> <!-- konec content -->
+        
+        
+	{block scripts}
+	<script src="{$basePath}/js/jquery.js"></script>
+	<script src="{$basePath}/js/netteForms.js"></script>
+	<script src="{$basePath}/js/main.js"></script>
+	{/block}
+              
+        <footer>
+        <div class="container">
+            <div class="col-xs-12 col-sm-4">
+            <p>Mezinárodní stránky školy: <a href="http://www.szkolazycia.info"> www.szkolazycia.info </a></p>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                    <span class="logoEU"><a href="http://www.cz-pl.eu/"><img src="{$basePath}/images/logoSPOL.jpg" width="180" height="40"></a></span>
+                    <span class="logoEU"><a href="http://www.euroregion-silesia.cz/"><img src="{$basePath}/images/logoEU.jpg" width="180" height="40"></a></span>
+            </div>
+        </div>
+        </footer>
+        </div> <!-- konec tela -->
+ 
+
+
+        
+         <script type='text/javascript' src="{$basePath}/js/bootstrap.js"></script>
+         <script type='text/javascript'>
+
+
+        $.noConflict();
+
+        $(function() {
+            $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd'}).val();
+        });
+
+
+       
+        </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{block content}
+
+{if $user->loggedIn}
+    <h1>Rekapitulace přihlášení a potvrzení přihlášky</h1>
+        {if $jizRegistrovan}
+            <h2 class="dulezite">Na tento termín jste byl přihlášený {$jizRegistrovan['datum_prihlaseni']|date:'%d.%m.%Y'} v {$jizRegistrovan['datum_prihlaseni']|date: '%H:%M'} hod.</h2>
+        {else}
+            <table>
+                <tr>
+                    <td>Termín školy:</td><td>{$termin->datum_zacatek|date:'%d.%m.%Y'} - {$termin->datum_konec|date:'%d.%m.%Y'}</td>
+                </tr>
+                <tr>
+                    <td>Místo konání:</td><td>{$termin->misto_konani}</td>
+                </tr>
+                <tr>
+                    <td>Účastnický poplatek: </td><td>{$termin->poplatek},- Kč</td>
+                </tr>
+                <tr>
+                    <td>Jméno studenta: </td><td>{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</td>
+                </tr>
+                <tr>
+                    <td>Obědy: </td>
+                    <td>
+                        {if $obedy}
+                            {foreach $obedy as $obed}
+                                {$obed->den} {$obed->cena},- Kč <br />
+                            {/foreach}
+                        {else}   
+                            <p>bez obědů</p>
+                        {/if}
+                    </td>
+                </tr>
+            </table>
+    
+    <h2 class="dulezite">Cena celkem: {$cena},- Kč</h2>
+    
+    {control prihlaseniFinal}
+    {/if}
+
+    <p><a n:href="Skola:prihlasenitermin $termin->termin_id">Zpět na předešlou stránku</a></p>
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

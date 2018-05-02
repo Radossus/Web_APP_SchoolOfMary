@@ -1,0 +1,75 @@
+﻿{block content}
+
+{if $user->loggedIn}
+    {if $terminy}
+        {foreach $terminy as $termin}
+        <h1>Termín školy </h1>
+
+        <table>
+            <tr>
+                <td>Datum: </td>
+                <td>{$termin->datum_zacatek|date:'%d.%m.%Y'} - {$termin->datum_konec|date:'%d.%m.%Y'}</td>
+            </tr>
+            <tr>
+                <td><!--Začátek: --></td>
+                <td><!--{$termin->datum_zacatek|date: '%H:%M'} hod. --></td>
+            </tr>
+            <tr>
+               <!-- <td>Škola:</td>
+                <td>{$termin->filie->nazev}</td>-->
+            </tr>
+            <tr>
+                <td>Místo:</td>
+                <td>{$termin->misto_konani}</td>
+            </tr>
+                <tr>
+                <td>Přihlášování je povoleno od-do: </td>
+                <td class="dulezite">{$termin->registrace_od|date:'%d.%m.%Y'} - {$termin->registrace_do|date:'%d.%m.%Y'}</td>
+            </tr>
+            <tr>
+                <td>Účastnický poplatek: </td>
+                <td>{$termin->poplatek},- Kč</td>
+            </tr>
+                <tr>
+                <td>Poznámka: </td>
+                <td>{!$termin->poznamka}</td>
+            </tr>
+            </table>
+            {if $povolenaRegistrace}
+                {if !$registrace[$termin[termin_id]]}
+                  <!--
+                  <div class='dulezite'>
+                      <strong>
+                          <ul>
+                              <li>Dodržujete-li ze zdravotních důvodů dietu, prosíme o nahlášení typu.</li>
+                              <li>Pokud s vámi jdou i děti, nahlašte počet.</li>
+                              <li>Máte volné místo autě a rádi někoho vemete? Dejte nám vědět.</li>
+                          </u>
+                      </strong>
+                  </div>
+                  
+                       {*/form letniSkola}
+                        {input poznamka}
+                        <div>{input send}</div>
+                       {/form letniSkola*}
+                  -->
+                    
+                    <p class="button">
+                         <a n:href='Skola:prihlasenitermin $termin->termin_id'>Přihlásit se na školu</a></h2>
+                    </p>
+                    
+                {else}
+                    <h2 class="dulezite">Na termín jste již přihlášen.</h2>
+                {/if}
+             {else}
+                 <h2 class="dulezite">Na tento termín není povolena registrace.</h2>
+             {/if}
+                {if count($terminy)>1}
+                    <hr>
+                {/if}
+             {/foreach}
+         {/if}
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

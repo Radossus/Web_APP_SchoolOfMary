@@ -1,0 +1,53 @@
+{block content}
+
+{if $user->loggedIn}
+    {if $user->isInRole('adminOV') ||  $user->isInRole('adminSuper')}
+        <h1>Přihlášení uživatelé</h1>
+        {if $prihlaseniUzivatele}
+            {if $prihlaseniObed}
+                <h2 class="dulezite">Počet obědů: </h2>
+                <table class="defaultTable">
+                    <tr><th>Den</th><th>Datum</th><th>Počet přihlášených</th><th>Cena za oběd</th><th>Cena celkem</th><th></th></tr>
+                {foreach $prihlaseniObed as $key => $obed}
+                    <tr>
+                        <td>{$obed[$key]->obed->den}</td> 
+                        <td>{$obed[$key]->obed->datum|date:'%d.%m.%Y' }</td> 
+                        <td align="center">{count($obed)}</td>
+                        <td align="center">{$obed[$key]->obed->cena}</td>
+                        <td align="center" border="1">{$obed[$key]->obed->cena * count($obed)},- Kč</td>
+                        <td><span class='button'><a n:href="Adminskola:obeducastnici $obed[$key]->termin_id, $obed[$key]->obed_id">Seznam přihlášených</a></span></td>
+                    </tr>
+                {/foreach}
+                </table>
+            {/if} 
+            
+            <h2 class="dulezite">Počet přihlášených účastníku na Školu: {count($prihlaseniUzivatele)}</h2>
+            <table class="defaultTable">
+                <tr><th>Přijmení jméno</th><th>Stupeň</th><th>Přihlášen dne</th><th>Email</th><th>Poznámka účastníka</th></tr>
+                {foreach $prihlaseniUzivatele as $item}
+                    <tr>
+                        <td>{$item->user->prijmeni} {$item->user->jmeno}</td>
+                        <td>{$item->user->stupen->stupen}</td>
+                        <td>{$item->datum_prihlaseni|date:'%d.%m.%Y %H:%M'}</td>
+                        <td>{$item->user->username}</td>
+                        <td>{$item->user_poznamka}</td>
+                    </tr> 
+                {/foreach}
+            </table>
+        {/if}
+        
+        <p>
+        <h2>Emaily pro zkopírování</h2>
+        {foreach $prihlaseniUzivatele as $item}
+            {if !strpos($item->user->username, "skzae")}
+                {$item->user->username};
+            {/if}
+        {/foreach}
+        </p>
+        
+        
+    {/if}   
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

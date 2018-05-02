@@ -1,0 +1,30 @@
+{block content}
+
+{if $user->loggedIn}
+    
+        <h1>Přihlášení obědů a ubytování na termín Školy {$termin->datum_zacatek|date:'%d.%m.%Y'} - {$termin->datum_konec|date:'%d.%m.%Y'}</h1>
+      {if $registrace}
+        {if $jizRegistrovan}
+            <h2 class="dulezite">Na tento termín jste byl přihlášený {$jizRegistrovan['datum_prihlaseni']|date:'%d.%m.%Y'} v {$jizRegistrovan['datum_prihlaseni']|date: '%H:%M'} hod.</h2>
+        {/if}
+           {if !$jizRegistrovan}
+                <h2></h2>
+                <p>Zvolte oběd či ubytování. <span class="dulezite"> Přihlášení obědů je závazné.</span></p>
+                <p><span class="dulezite"> Poznámky k ubytování:</span></p>
+                <ul>
+                    <li>po vyčerpání kapacity, nenabízíme další možnosti,</li>
+                    <li>ubytování pouze zprostředkováváme,</li>
+                    <li>50 % storno poplatky,</li>
+                    <li>platba při registraci.</li>
+                </ul>
+                {control obedyForm}
+
+           {/if}
+       {else}
+           <p class="dulezite">Registrace je povolená od {$termin->registrace_od|date:'%d.%m.%Y'} do {$termin->registrace_do|date:'%d.%m.%Y'}.</p>
+       {/if}
+          
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

@@ -1,0 +1,34 @@
+
+
+{block content}
+ <!--<h1 n:block=title>Škola křesťanského života a evangelizace</h1> -->
+
+    <h2>Osobní údaje</h2>
+        
+    <table>
+        <tr>
+            <td>Jméno: </td> <td>{$userInfo->jmeno} {$userInfo->prijmeni} </td>
+        </tr>
+        <tr>
+            <td>Přihlašovací jméno (email):</td><td>{$userInfo->username}</td>
+        </tr>
+        <tr>
+            <td>Vaše role:</td><td>{$userInfo->role}</td>
+        </tr>
+        <tr>
+            <td>Stupeň:</td><td>{$userInfo->stupen->stupen}</td>
+        </tr>
+        <tr>
+            <td>Škola:</td><td>{$userInfo->filie->nazev}</td>
+        </tr>
+        <tr>
+            <td>Heslo:</td><td><a n:href="User:changepassword">změna hesla</td>
+        </tr>
+    </table>
+
+        
+        
+
+{/block}
+
+

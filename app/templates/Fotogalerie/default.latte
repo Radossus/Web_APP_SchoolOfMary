@@ -1,0 +1,40 @@
+{* This is the welcome page, you can delete it *}
+
+{block content}
+ <h1>Fotogalerie</h1>
+ 
+ <div>
+ {foreach $fotogaleries as $category}
+     <a n:href="Fotogalerie:album $category->filie_id,$category->id">{$category->name}</a>
+ {/foreach}
+ </div>
+{/block}
+
+{block scripts}
+
+{/block}
+
+{block title}
+    Fotogalerie
+{/block}
+
+{block head}
+<style>
+	
+	.jush-com, .jush-php_doc { color: #929292; }
+	.jush-tag, .jush-tag_js { color: #6A8527; font-weight: bold; }
+	.jush-att { color: #8CA315 }
+	.jush-att_quo { color: #448CCB; font-weight: bold; }
+	.jush-php_var { color: #d59401; font-weight: bold; }
+	.jush-php_apo { color: green; }
+	.jush-php_new { font-weight: bold; }
+	.jush-php_fun { color: #254DB3; }
+	.jush-js, .jush-css { color: #333333; }
+	.jush-css_val { color: #448CCB; }
+	.jush-clr { color: #007800; }
+	.jush a { color: inherit; background: transparent; }
+	.jush-latte { color: #D59401; font-weight: bold }
+</style>
+{/block}
+
+

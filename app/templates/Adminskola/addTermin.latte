@@ -1,0 +1,12 @@
+{block content}
+
+{if $user->loggedIn}
+    {if $user->isInRole('adminOV')}
+        <h1>Vypsat nový termín školy</h1>
+        {control addTerminForm}
+
+    {/if}   
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

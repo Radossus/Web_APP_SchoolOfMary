@@ -1,0 +1,29 @@
+{* This is the welcome page, you can delete it *}
+
+{block content}
+<h1>Album: {$album->name}</h1>
+
+<div>
+ {foreach $fotos as $foto}
+{var $filie = $foto->photo_category}
+     <div class="photo"><a href="{$basePath}/photogallery/{$foto->name}" data-lightbox="image-{$foto->photo_category}"><img src="{$basePath}/photogallery/{$foto->name}" width="100" height="100"></a></div>
+ {/foreach}
+</div>
+ <div><a href="javascript:history.back();">zpět</a></div>
+ 
+{/block}
+
+{block scripts}
+    <script src="{$basePath}/js/jquery-1.11.0.min.js"></script>    
+    <script src="{$basePath}/js/lightbox.min.js"></script>
+{/block}
+
+{block title}
+    Album: {$album->name}
+{/block}
+
+{block head}
+
+{/block}
+
+

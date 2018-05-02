@@ -1,0 +1,21 @@
+{block content}
+
+{if $user->loggedIn}
+    {if $user->isInRole('adminOV') || $user->isInRole('adminSuper')}
+        <h1>Správa uživatelů</h1>
+        <p class="button"><a n:href="User:AddUser">Vložení nového účastníka</a></p>
+        <table class="defaultTable">
+            <tr><th>ID</th><th>Přijmení jméno</th><th>Email</th><th>Stupeň</th><th>Registrace dne</th><th></th></tr>
+        {foreach $users as $user}
+                {if $user->stupen == '999'}
+                    <tr style="background-color: coral"><td>{$user->id}</td><td>{$user->prijmeni} {$user->jmeno}</td><td>{$user->username}</td><td>{$user->stupen->stupen}</td><td>{$user->registrace_dne|date:'%d.%m.%Y %H:%M'}</td><td><a n:href="User:editUser $user->id">Editace</a></td></tr>
+                {else}
+                    <tr><td>{$user->id}</td><td>{$user->prijmeni} {$user->jmeno}</td><td>{$user->username}</td><td>{$user->stupen->stupen}</td><td>{$user->registrace_dne|date:'%d.%m.%Y %H:%M'}</td><td><a n:href="User:editUser $user->id">Editace</a></td></tr>
+                {/if}
+        {/foreach}
+        </table>
+    {/if}   
+{else}
+    <h2>Musíte být přihlášený. Jděte na <a n:href="User:in">přihlášení</a>.</h2>
+{/if}
+ 

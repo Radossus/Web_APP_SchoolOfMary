@@ -1,0 +1,23 @@
+{* This is the welcome page, you can delete it *}
+
+{block content}
+<h1>Administrace novinek </h1>
+<p type="button" class="btn btn-primary"><a n:href="AdminHome:AddNovinka">Vložení novinky</a></p>
+
+{foreach $news as $new}
+    <div class="boxZvyrazneni">
+        {$new->datum|date:'%d.%m.%Y'} - 
+        {$new->nadpis}
+        <span style="float:right;">
+            {$new->filie->nazev}
+            <a n:href="editNovinka $new->id">&nbspEditace&nbsp</a>
+            <a n:href="delete $new->id" onclick="return confirm('Opravdu chcete smazat novinku?')">&nbspSmazat&nbsp</a>
+        </span>
+    </div>
+{/foreach}
+</table>
+
+
+{/block}
+
+
